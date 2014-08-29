@@ -1,0 +1,113 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<style>
+.table .text-center{text-align: center;}
+.table-responsive{width:100%;}
+.table-responsive input{width:90%;}
+
+  .table-responsive.active-responsive table,  
+  .table-responsive.active-responsive thead, 
+  .table-responsive.active-responsive tbody, 
+  .table-responsive.active-responsive th, 
+  .table-responsive.active-responsive td, 
+  .table-responsive.active-responsive tr { 
+    display: block; 
+  }
+  
+  /* Hide table headers (but not display: none;, for accessibility) */
+  .table-responsive.active-responsive thead tr { 
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  
+  .table-responsive.active-responsive tr { border: 1px solid #ccc; }
+  
+  .table-responsive.active-responsive td { 
+    /* Behave  like a "row" */
+    border: none;
+    border-bottom: 1px solid #eee; 
+    position: relative;
+    padding-left: 50%; 
+  }
+  
+  .table-responsive.active-responsive .before-text { 
+    position: absolute;
+    left: 30px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    z-index: 12;
+    padding-top: 5px;
+  }
+</style>
+</head>
+<body>
+
+<div>
+	<table class="table-responsive">
+		<thead>
+		<tr>
+			<th class="text-center">Dispatch</th>
+			<th class="text-center">En Route</th>
+			<th class="text-center">Arravial</th>
+			<th class="text-center">Department</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td><input type="text" class="span12" /></td>
+			<td><input type="text" class="span12" /></td>
+			<td><input type="text" class="span12" /></td>
+			<td><input type="text" class="span12" /></td>
+		</tr>
+		</tbody>
+	</table> 
+</div>
+
+<script src="scripts/jquery1.11.js"></script>
+<script>
+		var tableResponsive = function (){
+ 			 if($( window ).width() <= 760){
+ 			 	
+	 			 	$(".table-responsive").each(function (index, label) {
+	 			 		if(!$(".table-responsive:eq("+index+")").hasClass("active-responsive")){
+	 			 			var tr_count = $(".table-responsive:eq("+index+") tbody tr");
+	 			 			var td_count = $(".table-responsive:eq("+index+") tbody tr:eq(0) td");
+
+	 			 			tr_count.each(function (i, l) {
+		 			 			td_count.each(function (ix, lx) {
+		 			 				var th =  $(".table-responsive:eq("+index+") thead tr:eq(0) th:eq("+ix+") ").text();
+		 			 				var td =  $(".table-responsive:eq("+index+") tbody tr:eq("+i+") td:eq("+ix+") ");
+
+		 			 				td.before("<span class='before-text'>"+th+"</span>");
+		 			 				console.log(tr_count.size());
+		 			 			});
+	 			 			});
+	 			 		}
+	 			 	});
+ 			 	
+ 			 	$(".table-responsive").addClass("active-responsive");
+
+ 			 }else{
+ 			 	$(".table-responsive").removeClass("active-responsive");
+ 			 	$(".table-responsive .before-text").remove();
+
+ 			 }			
+		}
+		
+		$( window ).resize(function() {
+			tableResponsive();
+		});
+		
+		$(document).ready(function(){
+			tableResponsive();
+		});
+
+</script>
+
+
+
+</body>
+</html> 
